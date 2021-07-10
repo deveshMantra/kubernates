@@ -1,0 +1,15 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Service    
+metadata:           # meta deta used for defining the of naming
+  name: nginx-service
+  labels:
+    app: nginx      # lable is pointer to labels in deployment yaml file   
+spec:               # specs for you kind here deployment
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 3 # tells deployment to run 1 pods matching the template
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080  # port of pod should mathc the port in deployment container port
