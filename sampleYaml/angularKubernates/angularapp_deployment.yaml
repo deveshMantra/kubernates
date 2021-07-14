@@ -1,0 +1,30 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment    
+metadata:           # meta deta used for defining the of naming
+  name: angularapp-deployment
+  labels:
+    app: angularapp  
+spec:               # specs for you kind here deployment
+  selector:
+    matchLabels:
+      app: angularapp
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # used for pods create pods using pod definition in this template
+    metadata:
+      labels:
+        app: angularapp  # all the pods created using this blue print will be labeled as app nginx
+    spec:
+      containers:
+      - name: angularapp
+        image: deveshmehta7/angularappkubernates
+        ports:
+        - containerPort: 80
+      imagePullSecrets:
+      - name: dockcred
+
+
+                 # to use docer cred set your docker credentials
+                 # once u do docker login it will by default create .docker folder into ur system and there u can 
+                 # see ur docker credentials
+                 # docker login kubectl create secret generic dockcred --from-file=.dockerconfigjson="/home/<LINUX_USER/.docker/config.json" --type=kubernetes.io/dockerconfigjson
+

@@ -10,7 +10,7 @@ spec:               # specs for you kind here deployment
   selector:
     matchLabels:
       app: nginx
-  replicas: 3 # tells deployment to run 1 pods matching the template
+  replicas: 1 # tells deployment to run 1 pods matching the template
   template: # used for pods create pods using pod definition in this template
     metadata:
       labels:

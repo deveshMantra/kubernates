@@ -5,6 +5,7 @@ metadata:           # meta deta used for defining the of naming
   labels:
     app: nginx      # lable is pointer to labels in deployment yaml file   
 spec:               # specs for you kind here deployment
+  type: NodePort
   selector:
     app: nginx    # this selector should match the label of pod in deployments template-metadata--labels-app
   ports:

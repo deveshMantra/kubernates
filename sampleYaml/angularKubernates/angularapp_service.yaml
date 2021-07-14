@@ -1,0 +1,20 @@
+apiVersion: v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Service    
+metadata:           # meta deta used for defining the of naming
+  name: angularapp-service
+  labels:
+    app: angularapp      # lable is pointer to labels in deployment yaml file   
+spec:               # specs for you kind here deployment
+  selector:
+    app: angularapp # this selector should match the label of pod in deployments template-metadata--labels-app
+  ports:
+    - protocol: TCP
+      port: 80  # service port
+      targetPort: 80  # port of pod should match the port in deployment container port containers-ports-containerPort
+
+
+# kubectl apply -f mongodb_service.yaml        
+# check if service is mapped with correct pod or not
+# kubectl describe service mongodb-service
+# kubectl get pod -o wide
+# and than check the ip of pod and service
