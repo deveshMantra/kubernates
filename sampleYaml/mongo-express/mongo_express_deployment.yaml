@@ -1,0 +1,46 @@
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
+kind: Deployment    
+metadata:           # meta deta used for defining the of naming
+  name: mongo-express-deployment
+  labels:
+    app: mongo-express  
+spec:               # specs for you kind here deployment
+  selector:
+    matchLabels:
+      app: mongo-express
+  replicas: 1 # tells deployment to run 1 pods matching the template
+  template: # used for pods create pods using pod definition in this template
+    metadata:
+      labels:
+        app: mongo-express  # all the pods created using this blue print will be labeled as app nginx
+    spec:
+      volumes:
+      - name: task-pv-storage
+        persistentVolumeClaim:
+         claimName: task-pv-claim
+      containers:
+      - name: mongo-express
+        image: mongo-express
+        volumeMounts:
+        - mountPath: "/home/ubuntusystem/Devesh/datastorage"
+          name: task-pv-storage
+        ports:
+        - containerPort: 8081
+        env: # setting env variables since we dont want to add value we use secrets
+        - name: ME_CONFIG_MONGODB_ADMINUSERNAME
+          valueFrom: # refeerencing secret values from
+             secretKeyRef: # reference of secret files
+               name: mongodb-secret # name used in mongo_secret
+               key: mongo-root-username
+        - name: ME_CONFIG_MONGODB_ADMINPASSWORD
+          valueFrom: # refeerencing secret values from
+             secretKeyRef: # reference of secret files
+               name: mongodb-secret # name used in mongo_secret
+               key: mongo-root-password
+        - name: ME_CONFIG_MONGODB_SERVER
+          valueFrom: # refeerencing secret values from
+             configMapKeyRef: # reference of config map centralized placce to have our configs
+               name: mongodb-configmap # name used in mongodb_config_map.yaml
+               key: database_url  # key we want to use here from mongodb_config_map.yaml files
+
+ 
