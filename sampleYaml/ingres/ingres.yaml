@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1 
+kind: Ingress    
+metadata:           # meta deta used for defining the of naming
+  name: app-ingress
+spec:               
+  rules:
+  - host: mytestdomain.com # this is ypur domain name
+    http:
+      paths: 
+      - backend: 
+           serviceName: mongo-express-service-normal  # name of the service you want to call when you hit the domamin 
+           servicePort: 8081 
+#      - path: /api # this way i can route requests to particular application 
+#           serviceName: some-backend-api-servicec  # name of the service you want to call when you hit the domamin 
+#           servicePort: 8080 
+
+
+# in local you can create your own domain
+# goto /etc/hosts file
+# add IP of ingres there and domain and bingo you can use your system with mytestdomain.com
